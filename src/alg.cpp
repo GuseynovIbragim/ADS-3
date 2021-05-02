@@ -52,37 +52,40 @@ while (!stackOperators.empty()) {
 
 int eval(std::string pst) {
 int result = 0;
-stack <int> buff;
+TStack <int> stack2;
 for (int i = 0; i < pst.size(); i++) {
     if (isdigit(pst[i])) {
-        string strBuff = "";
+        string strstack2 = "";
         //while (!IsOperator(pst[i])) {
         while (isdigit(pst[i])) {
-            strBuff += pst[i];
+            strstack2 += pst[i];
             i++;
             if (i == pst.size())
                 break;
         }
-        buff.push(stoi(strBuff));
+        stack2.push(stoi(strstack2));
         i--;
     } else { if (IsOperator(pst[i])) {
-        int a = buff.top();
-        buff.pop();
-        int b = buff.top();
-        buff.pop();
+        int a = stack2.top();
+        stack2.pop();
+        int b = stack2.top();
+        stack2.pop();
         switch (pst[i]) {
         case '+': result = b + a; break;
         case '-': result = b - a; break;
         case '*': result = b * a; break;
         case '/': result = b / a; break;
-        case '^': result = stoi(to_string(pow(stoi(to_string(b)), stoi(to_string(a))))); break;
+        case '^': {
+            result = stoi(to_string(pow(stoi(to_string(b)), stoi(to_string(a)))));
+            break;
         }
-        buff.push(result);
+        }
+        stack2.push(result);
     }
            }
   return 0;
 }
-return buff.top();
+return stack2.top();
 }
 int Priority(char s) {
 switch (s) {
