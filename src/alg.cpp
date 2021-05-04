@@ -3,9 +3,8 @@
 #include "tstack.h"
 
 std::string infx2pstfx(std::string inf) {
-string pst = "";
-pst = "";
 stack <char> stackOperators;
+string pst = "";
 for (int i = 0; i < inf.size(); i++) {
     if (isdigit(inf[i])) {
         while (isdigit(inf[i])) {
@@ -51,33 +50,32 @@ while (!stackOperators.empty()) {
 }
 
 int eval(std::string pst) {
-int result = 0;
+int result = 0, ElementInTop = 0;
 TStack <int> stack2;
 for (int i = 0; i < pst.size(); i++) {
-    if (isdigit(pst[i])) {
-        string strstack2 = "";
-        //while (!IsOperator(pst[i])) {
-        while (isdigit(pst[i])) {
-            strstack2 += pst[i];
-            i++;
-            if (i == pst.size())
-                break;
-        }
-        stack2.push(stoi(strstack2));
-        i--;
-    } else { if (IsOperator(pst[i])) {
-        int a = stack2.top();
-        stack2.pop();
-        int b = stack2.top();
-        stack2.pop();
-        switch (pst[i]) {
-        case '+': result = b + a; break;
-        case '-': result = b - a; break;
-        case '*': result = b * a; break;
-        case '/': result = b / a; break;
-        case '^': {
-            result = stoi(to_string(pow(stoi(to_string(b)), stoi(to_string(a)))));
-            break;
+if (isdigit(pst[i])) {
+string strstack2 = "";
+while (isdigit(pst[i])) {
+strstack2 += pst[i];
+i++;
+if (i == pst.size())
+break;
+}
+stack2.push(stoi(strstack2));
+i--;
+} else { if (IsOperator(pst[i])) {
+int a = stack2.top();
+stack2.pop();
+int b = stack2.top();
+stack2.pop();
+switch (pst[i]) {
+case '+': result = b + a; break;
+case '-': result = b - a; break;
+case '*': result = b * a; break;
+case '/': result = b / a; break;
+case '^': {
+result = stoi(to_string(pow(stoi(to_string(b)), stoi(to_string(a)))));
+break;
         }
         }
         stack2.push(result);
@@ -85,7 +83,8 @@ for (int i = 0; i < pst.size(); i++) {
            }
   return 0;
 }
-return stack2.top();
+ElementInTop = stack2.top();
+return ElementInTop;
 }
 int Priority(char s) {
 switch (s) {
@@ -100,9 +99,14 @@ default: return 6;
 }
 }
 bool IsOperator(char symbol) {
-if (symbol == '+' || symbol == '-' || symbol == '*' || symbol == '/' || symbol == '^' || symbol == '(' || symbol == ')') {
-    return true;
-} else {
-    return false;
+switch (symbol) {
+case '+': return true;
+case '-': return true;
+case '*': return true;
+case '/': return true;
+case '^': return true;
+case '(': return true;
+case ')': return true;
+default: return false;
 }
 }
