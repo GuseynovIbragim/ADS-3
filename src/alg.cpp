@@ -1,9 +1,10 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
+#include <stack>
 
 std::string infx2pstfx(std::string inf) {
-stack <char> stackOperators;
+TStack <char> stackOperators;
 string pst = "";
 for (int i = 0; i < inf.size(); i++) {
     if (isdigit(inf[i])) {
@@ -20,19 +21,19 @@ for (int i = 0; i < inf.size(); i++) {
         if (inf[i] == '(') {
             stackOperators.push(inf[i]);
         } else if (inf[i] == ')') {
-            char s = stackOperators.top();
+            char s = stackOperators.get();
             stackOperators.pop();
             while (s != '(') {
                 //pst += to_string(s);
                 pst += string() + s;
                 pst += ' ';
-                s = stackOperators.top();
+                s = stackOperators.get();
                 stackOperators.pop();
             }
         } else {
             if (!stackOperators.empty()) {
-                if (Priority(inf[i]) <= Priority(stackOperators.top())) {
-                    pst += string() + stackOperators.top();
+                if (Priority(inf[i]) <= Priority(stackOperators.get())) {
+                    pst += string() + stackOperators.get();
                     pst += ' ';
                     stackOperators.pop();
                 }
@@ -42,7 +43,7 @@ for (int i = 0; i < inf.size(); i++) {
     }
 }
 while (!stackOperators.empty()) {
-    pst += stackOperators.top();
+    pst += stackOperators.get();
     pst += ' ';
     stackOperators.pop();
 }
@@ -64,26 +65,23 @@ break;
 stack2.push(stoi(strstack2));
 i--;
 } else { if (IsOperator(pst[i])) {
-int a = stack2.top();
+int a = stack2.get();
 stack2.pop();
-int b = stack2.top();
+int b = stack2.get();
 stack2.pop();
 switch (pst[i]) {
 case '+': result = b + a; break;
 case '-': result = b - a; break;
 case '*': result = b * a; break;
 case '/': result = b / a; break;
-case '^': {
-result = stoi(to_string(pow(stoi(to_string(b)), stoi(to_string(a)))));
-break;
-        }
+case '^': result = pow(b,a); break;
         }
         stack2.push(result);
     }
            }
   return 0;
 }
-ElementInTop = stack2.top();
+ElementInTop = stack2.get();
 return ElementInTop;
 }
 int Priority(char s) {
