@@ -1,7 +1,7 @@
 // Copyright 2021 NNTU-CS
 #include <string>
 #include "tstack.h"
-#include <stack>
+#include <math.h>
 
 std::string infx2pstfx(std::string inf) {
 TStack <char> stackOperators;
@@ -74,7 +74,7 @@ case '+': result = b + a; break;
 case '-': result = b - a; break;
 case '*': result = b * a; break;
 case '/': result = b / a; break;
-case '^': result = pow(b,a); break;
+case '^': result = pow(b, a); break;
         }
         stack2.push(result);
     }
